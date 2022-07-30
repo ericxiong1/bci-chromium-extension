@@ -1,0 +1,20 @@
+
+html, body {
+    margin: 0;
+    box-sizing: border-box;
+}
+.raise{
+    background-color: black;
+}
+section {
+    padding: 50px;
+}
+
+h1 span {
+    font-size: 50%;
+}
+
+#data {
+    padding: 10px;
+    overflow-wrap: break-word;
+}
