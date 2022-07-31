@@ -1,3 +1,4 @@
+import fourier from '../compile.js'
 const dataDiv = document.getElementById('data')
 const time = document.getElementById('time')
 const body = document.querySelector('html')
@@ -39,15 +40,19 @@ export const ondata = (track, data, timestamp) => {
         else{
             //console.log(af7Array)
             //console.log('AF7')
+            //console.log(fourier(af7Array))
         }
-        if (sum>300){
-            //console.log('RAISE')
-
-            if ((lastFire+1) < (timestamp[0] - startTime)/1000){
-                body.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16)
+        for (let i = 0; i<12;i++){
+            if (data[i]>300){
+                //console.log('RAISE')
+    
+                if ((lastFire+1) < (timestamp[0] - startTime)/1000){
+                    body.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16)
+                }
+                lastFire = ((timestamp[0] - startTime)/1000)
             }
-            lastFire = ((timestamp[0] - startTime)/1000)
         }
+
     }
     if (label==='AF8'){
         if (af8Array.length < 256){
@@ -83,7 +88,7 @@ export const ondata = (track, data, timestamp) => {
         }
     }
     //console.log(JSON.stringify(data));
-    tracks[label].innerHTML = `<h3>${track.contentHint}</h3>${sum}`    
+    tracks[label].innerHTML = `<h3>${track.contentHint}</h3>${data}`    
 }
 
-export const ontrack = (track) =>  setTimeout(track.subscribe((data, timestamp) => ondata(track, data, timestamp)),5000)
+export const ontrack = (track) =>  track.subscribe((data, timestamp) => ondata(track, data, timestamp))
