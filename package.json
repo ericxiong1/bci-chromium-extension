@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "description": "A basic data acquisition script",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "tinybuild",
     "build": "tinybuild build",
@@ -12,6 +11,7 @@
   "author": "Garrett Flynn",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
+    "fft-js": "^0.0.12",
     "typescript": "4.6.4"
   },
   "devDependencies": {
