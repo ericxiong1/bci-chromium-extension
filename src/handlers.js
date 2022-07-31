@@ -37,11 +37,11 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            console.log(af7Array)
-            console.log('AF7')
+            //console.log(af7Array)
+            //console.log('AF7')
         }
         if (sum>300){
-            console.log('RAISE')
+            //console.log('RAISE')
 
             if ((lastFire+1) < (timestamp[0] - startTime)/1000){
                 body.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16)
@@ -56,8 +56,8 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            console.log(af8Array)
-            console.log('AF8')
+            //console.log(af8Array)
+            //console.log('AF8')
         }
     }
     if (label==='TP9'){
@@ -67,8 +67,8 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            console.log(tp9Array)
-            console.log('TP9')
+            //console.log(tp9Array)
+            //console.log('TP9')
         }
     }
     if (label==='TP10'){
@@ -78,8 +78,8 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            console.log(tp10Array)
-            console.log('TP10')
+            //console.log(tp10Array)
+            //console.log('TP10')
         }
     }
     //console.log(JSON.stringify(data));
