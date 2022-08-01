@@ -54,7 +54,7 @@ export const ondata = (track, data, timestamp) => {
                 y: [[abRatio]]
             }, [0])
             if (cnt === 10) clearInterval(interval);
-        }, 1000);
+        }, 2000);
 
 
     }
@@ -74,7 +74,7 @@ export const ondata = (track, data, timestamp) => {
 
     // update the text content of this track's paragraph
     let sum = 0;
-    if (channelCount == 4) {
+    if (channelCount == 8) {
         abRatio = ABarray[1] / ABarray[0]
         channelCount = 0
         console.log(ABarray[1] / ABarray[0])
@@ -110,7 +110,7 @@ export const ondata = (track, data, timestamp) => {
                     document.querySelector(".button1").style.color = '#282828';
 
                     eyebrowsRaised += 2;
-                    document.querySelector('h2').innerText = "Blink counter: " + eyebrowsRaised.toString();
+                    document.querySelector('h2').innerText = "Action counter: " + eyebrowsRaised.toString();
                 }
                 lastFire = ((timestamp[0] - startTime) / 1000)
                 break
@@ -144,7 +144,7 @@ export const ondata = (track, data, timestamp) => {
                     document.querySelector(".button1").style.color = '#282828';
 
                     eyebrowsRaised += 1;
-                    document.querySelector('h2').innerText = "Blink counter: " + eyebrowsRaised.toString();
+                    document.querySelector('h2').innerText = "Action counter: " + eyebrowsRaised.toString();
                 }
                 lastFire = ((timestamp[0] - startTime) / 1000)
             }

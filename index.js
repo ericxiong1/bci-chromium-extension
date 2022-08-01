@@ -12,7 +12,7 @@ button.onclick = () => {
     }).then(device => {
         document.querySelector(".button1").innerText = "Device Paired";
         const counter = document.createElement('h2');
-        counter.innerText = 'Blink counter: 0';
+        counter.innerText = 'Action counter: 0';
         document.querySelector('#main').appendChild(counter);
 
 

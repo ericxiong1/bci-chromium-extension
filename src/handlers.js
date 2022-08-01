@@ -11,10 +11,9 @@ let af7Array = [0,0,0,0];
 let af8Array = [0,0,0,0];
 let ABarray = [0,0]
 let channelCount = 0;
-
+let toggled = 0
 const ondata = (track, data, timestamp) => {
     
-      
       // The body of this function will be executed as a content script inside the
       // current page
     
@@ -25,10 +24,15 @@ const ondata = (track, data, timestamp) => {
     const label = track.contentHint
 
     // update the text content of this track's paragraph
-    let sum = 0;
-    if (channelCount == 4){
+    if (channelCount == 20){
         channelCount = 0
-        console.log(ABarray[1]/ABarray[0])
+        console.log(ABarray[0]/ABarray[1])
+        if (button1.innerHTML == 'Dynamic' && ABarray[0]/ABarray[1] >0.35){
+            lightsOff.style.opacity = (ABarray[0]/ABarray[1])
+        }
+        else{
+            lightsOff.style.opacity = 0;
+        }
         ABarray = [0,0]
     }
     if (label==='AF7'){
@@ -48,15 +52,21 @@ const ondata = (track, data, timestamp) => {
             ABarray[0] += a
             ABarray[1] += b
             af7Array = [0,0,0,0];
-
+            
         }
         for (let i = 0; i<12;i++){
-            if (data[i]>300){
+            if (data[i]>300 && button1.innerHTML =='Toggle' ){
                 //console.log('RAISE')
 
                 if ((lastFire+0.5) < (timestamp[0] - startTime)/1000){
-                    lightsOff.style.opacity = '0.8'
-                    lightsOff.style.display = 'flex'
+                    if(toggled == 0){
+                        lightsOff.style.opacity = 0.6
+                        toggled = 1
+                    }
+                    else {
+                        lightsOff.style.opacity = 0
+                        toggled = 0
+                    }
                 }
                 lastFire = ((timestamp[0] - startTime)/1000)
                 break
@@ -80,12 +90,18 @@ const ondata = (track, data, timestamp) => {
             af8Array = [0,0,0,0];
         }
         for (let i = 0; i<12;i++){
-            if (data[i]>300){
+            if (data[i]>300&& button1.innerHTML =='Toggle'){
                 //console.log('RAISE')
     
                 if ((lastFire+0.5) < (timestamp[0] - startTime)/1000){
-                    lightsOff.style.opacity = '0.8'
-                    lightsOff.style.display = 'flex'
+                    if(toggled == 0){
+                        lightsOff.style.opacity = 0.6
+                        toggled = 1
+                    }
+                    else {
+                        lightsOff.style.opacity = 0
+                        toggled = 0
+                    }
                 }
                 lastFire = ((timestamp[0] - startTime)/1000)
             }

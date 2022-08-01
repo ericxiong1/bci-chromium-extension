@@ -3,7 +3,7 @@ const dataDevices = new DataDevices()
 
 dataDevices.load($i)
 const button = document.createElement('button');
-button.innerHTML = 'Bluetooth Connect'
+button.innerHTML = 'Connect'
 button.style.zIndex = '1000';
 button.style.position = 'fixed';
 button.style.top = '0'
@@ -11,7 +11,18 @@ button.style.left = '0'
 button.style.background = 'white'
 button.style.borderRadius = '10%'
 button.style.color = 'black';
+const button1 = document.createElement('button');
+button1.innerHTML = 'Toggle'
+button1.style.zIndex = '1000';
+button1.style.position = 'fixed';
+button1.style.top = '0'
+button1.style.left = '70px'
+button1.style.background = 'white'
+button1.style.borderRadius = '10%'
+button1.style.color = 'black';
+
 document.body.appendChild(button);
+document.body.appendChild(button1);
 const lightsOff = document.createElement('div');
 lightsOff.style.width = '10000px'
 lightsOff.style.height = '10000px'
@@ -36,5 +47,14 @@ button.onclick = () => {
         device.stream.tracks.forEach(ontrack)
         device.stream.onaddtrack = (e) => ontrack(e.track)
     })
+
+}
+button1.onclick = () => {
+    if (button1.innerHTML=='Toggle'){
+        button1.innerHTML = 'Dynamic'
+    }
+    else{
+        button1.innerHTML = 'Toggle'
+    }
 
 }
