@@ -1,0 +1,20 @@
+{
+    "name": "bci-extension",
+    "description" : "BCI Extension-Test",
+    "version": "1.0",
+    "host_permissions": ["<all_urls>"],
+    "manifest_version": 3,
+    "content_scripts": [
+        
+      {
+        "all_frames": true,
+        "js": ["compile.js","./datastreams/index.esm.js","./src/handlers.js","./muse/index.esm.js","content_script.js"],
+        "matches": ["<all_urls>"],
+        "run_at": "document_idle"
+      }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+      }
+
+  }
