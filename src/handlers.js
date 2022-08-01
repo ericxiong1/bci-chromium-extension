@@ -1,4 +1,5 @@
-
+//THIS IS THE HANDLER FILE THAT IS RUN FROM THE CONTENT SCRIPT. IT CANNOT IMPORT MODULES
+//SO ALL SCRIPTS MUST BE RUN AT THE SAME TIME
 const dataDiv = document.getElementById('data')
 const time = document.getElementById('time')
 const body = document.querySelector('html')
@@ -24,9 +25,16 @@ const ondata = (track, data, timestamp) => {
     const label = track.contentHint
 
     // update the text content of this track's paragraph
+
+
+    //every five seconds (20 channel counts) the alpha beta ratio is calculated and distributed to
+    //extension to adjust the brightness (if on dynamic mode)
     if (channelCount == 20){
         channelCount = 0
-        console.log(ABarray[0]/ABarray[1])
+
+        //if you would like to configure the threshold to make it more responsive 
+        //to you, change 0.35
+
         if (button1.innerHTML == 'Dynamic' && ABarray[0]/ABarray[1] >0.35){
             lightsOff.style.opacity = (ABarray[0]/ABarray[1])
         }
@@ -35,18 +43,16 @@ const ondata = (track, data, timestamp) => {
         }
         ABarray = [0,0]
     }
+    //listens for label and adds EEG data to label bins.
+    //when bins have 256 points (1 second of data) the FFT is performed 
+    //and frequencies sorted into the alpha/beta bins
     if (label==='AF7'){
-        //for (let i=0;i<12;i++){
-          //  sum += data[i]
-        //}
         if (af7Array.length < 256){
             for (let i = 0; i<12; i++){
                 af7Array.push(parseInt(data[i]));
             }
         }
         else{
-            //console.log(af7Array)
-            //[ABarray[0],ABarray[1]] =+ fourier(af7Array)
             channelCount++
             let[a,b] = fourier(af7Array)
             ABarray[0] += a
@@ -56,8 +62,7 @@ const ondata = (track, data, timestamp) => {
         }
         for (let i = 0; i<12;i++){
             if (data[i]>300 && button1.innerHTML =='Toggle' ){
-                //console.log('RAISE')
-
+                //if you would like to change how dark the screen gets, change opacity
                 if ((lastFire+0.5) < (timestamp[0] - startTime)/1000){
                     if(toggled == 0){
                         lightsOff.style.opacity = 0.6
@@ -74,6 +79,8 @@ const ondata = (track, data, timestamp) => {
         }
 
     }
+    //NOTE: forehead raise data is only collected from the AF7/AF8 channels
+    //to increase accuracy
     if (label==='AF8'){
         if (af8Array.length < 256){
             for (let i = 0; i<12; i++){
@@ -81,18 +88,15 @@ const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            //console.log(af8Array)
             let[a,b] = fourier(af8Array)
             ABarray[0] += a
             ABarray[1] += b
-            //[ABarray[0],ABarray[1]] =+ fourier(af8Array)
             channelCount++
             af8Array = [0,0,0,0];
         }
         for (let i = 0; i<12;i++){
+                //if the toggle hasn't fired in the last 0.5 seconds, change the opacity of tab
             if (data[i]>300&& button1.innerHTML =='Toggle'){
-                //console.log('RAISE')
-    
                 if ((lastFire+0.5) < (timestamp[0] - startTime)/1000){
                     if(toggled == 0){
                         lightsOff.style.opacity = 0.6
@@ -114,8 +118,6 @@ const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            //console.log(tp9Array)
-            //[ABarray[0],ABarray[1]] =+ fourier(tp9Array)
             channelCount++
             let[a,b] = fourier(tp9Array)
             ABarray[0] += a
@@ -130,7 +132,6 @@ const ondata = (track, data, timestamp) => {
             }
         }
         else{
-            //console.log(tp10Array)
             let [a,b] = fourier(tp10Array)
             ABarray[0] += a
             ABarray[1] += b

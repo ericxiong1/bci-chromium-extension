@@ -2,6 +2,7 @@
 const dataDevices = new DataDevices()
 
 dataDevices.load($i)
+//Pair button 
 const button = document.createElement('button');
 button.innerHTML = 'Connect'
 button.style.zIndex = '1000';
@@ -11,6 +12,9 @@ button.style.left = '0'
 button.style.background = 'white'
 button.style.borderRadius = '10%'
 button.style.color = 'black';
+
+
+//Toggle Dynamic button
 const button1 = document.createElement('button');
 button1.innerHTML = 'Toggle'
 button1.style.zIndex = '1000';
@@ -23,6 +27,8 @@ button1.style.color = 'black';
 
 document.body.appendChild(button);
 document.body.appendChild(button1);
+
+//screen dimmer div
 const lightsOff = document.createElement('div');
 lightsOff.style.width = '10000px'
 lightsOff.style.height = '10000px'
@@ -37,6 +43,7 @@ lightsOff.style.zIndex = '999'
 lightsOff.style.pointerEvents = 'none'
 document.body.appendChild(lightsOff)
 
+//onclick listeners
 button.onclick = () => {
 
     dataDevices.getUserDevice({

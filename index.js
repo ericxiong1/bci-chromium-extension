@@ -4,7 +4,7 @@ import muse from "./muse/index.import.js"
 import * as handlers from './src/handlers.import.js'
 dataDevices.load(muse)
 const button = document.querySelector('button')
-const body = document.querySelector('body')
+//pair button listener
 button.onclick = () => {
 
     dataDevices.getUserDevice({

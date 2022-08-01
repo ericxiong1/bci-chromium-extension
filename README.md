@@ -18,10 +18,10 @@ The second button allows two modes that are switchable by clicking.
 By clicking on the popup menu and going to the Metrics page you can look at a real-time graph of your Alpha/Beta frequency ratio.
 
 Packages used:
-fft-js
-Plotly.js
+fft-js,
+Plotly.js,
 BCI Web Browser Boilerplate (using the Web Bluetooth API) by Brainsatplay
 
 Special thanks:
-natHACKS 2022 Mentors and Organizers
+natHACKS 2022 Mentors and Organizers,
 Brainsatplay for providing the Boilerplate

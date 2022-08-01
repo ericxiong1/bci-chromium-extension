@@ -102,6 +102,7 @@ function fft(vector) {
 
     return X;
   }
+
 function fourier(signal) {
     var phasors= fft(signal);
 

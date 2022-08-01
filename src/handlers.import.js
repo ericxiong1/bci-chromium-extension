@@ -17,8 +17,6 @@ let abRatio = 0;
 let dataCount = 0;
 let abAverage = 0;
 
-let tFactor = 0;
-
 export const ondata = (track, data, timestamp) => {
 
     if (abRatio != 0) {
@@ -73,26 +71,27 @@ export const ondata = (track, data, timestamp) => {
     time.innerText = `${((timestamp[0] - startTime) / 1000).toFixed(2)}s`
 
     // update the text content of this track's paragraph
-    let sum = 0;
+
+    //every two seconds (8 channel counts) the alpha beta ratio is calculated and distributed to
+    //the plotting script
     if (channelCount == 8) {
         abRatio = ABarray[1] / ABarray[0]
         channelCount = 0
         console.log(ABarray[1] / ABarray[0])
         ABarray = [0, 0]
     }
+
+    //listens for label and adds EEG data to label bins.
+    //when bins have 256 points (1 second of data) the FFT is performed 
+    //and frequencies sorted into the alpha/beta bins
     if (label === 'AF7') {
-        //for (let i=0;i<12;i++){
-        //  sum += data[i]
-        //}
         if (af7Array.length < 256) {
             for (let i = 0; i < 12; i++) {
                 af7Array.push(parseInt(data[i]));
             }
         }
         else {
-            //console.log(af7Array)
             console.log('AF7')
-            //[ABarray[0],ABarray[1]] =+ fourier(af7Array)
             channelCount++
             let [a, b] = fourier(af7Array)
             ABarray[0] += a
@@ -102,14 +101,12 @@ export const ondata = (track, data, timestamp) => {
         }
         for (let i = 0; i < 12; i++) {
             if (data[i] > 300) {
-                //console.log('RAISE')
-
                 if ((lastFire + 0.5) < (timestamp[0] - startTime) / 1000) {
                     body.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
                     body.style.color = '#282828';
                     document.querySelector(".button1").style.color = '#282828';
 
-                    eyebrowsRaised += 2;
+                    eyebrowsRaised += 1;
                     document.querySelector('h2').innerText = "Action counter: " + eyebrowsRaised.toString();
                 }
                 lastFire = ((timestamp[0] - startTime) / 1000)
@@ -118,6 +115,8 @@ export const ondata = (track, data, timestamp) => {
         }
 
     }
+    //NOTE: forehead raise data is only collected from the AF7/AF8 channels
+    //to increase accuracy
     if (label === 'AF8') {
         if (af8Array.length < 256) {
             for (let i = 0; i < 12; i++) {
@@ -125,18 +124,15 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else {
-            //console.log(af8Array)
-            console.log('AF8')
             let [a, b] = fourier(af8Array)
             ABarray[0] += a
             ABarray[1] += b
-            //[ABarray[0],ABarray[1]] =+ fourier(af8Array)
             channelCount++
             af8Array = [0, 0, 0, 0];
         }
+        //if the toggle hasn't fired in the last 0.5 seconds, change the background color
         for (let i = 0; i < 12; i++) {
             if (data[i] > 300) {
-                //console.log('RAISE')
 
                 if ((lastFire + 0.5) < (timestamp[0] - startTime) / 1000) {
                     body.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -157,13 +153,10 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else {
-            //console.log(tp9Array)
-            console.log('TP9')
-            //[ABarray[0],ABarray[1]] =+ fourier(tp9Array)
             channelCount++
             let [a, b] = fourier(tp9Array)
-            // ABarray[0] += a
-            // ABarray[1] += b
+            ABarray[0] += a
+            ABarray[1] += b
             tp9Array = [0, 0, 0, 0];
         }
     }
@@ -174,16 +167,14 @@ export const ondata = (track, data, timestamp) => {
             }
         }
         else {
-            //console.log(tp10Array)
-            console.log('TP10')
             let [a, b] = fourier(tp10Array)
-            // ABarray[0] += a
-            // ABarray[1] += b
+            ABarray[0] += a
+            ABarray[1] += b
             channelCount++
             tp10Array = [0, 0, 0, 0];
         }
     }
-    //console.log(JSON.stringify(data));
+    //updates array data on options page (is normally hidden)
     tracks[label].innerHTML = `<h3>${track.contentHint}</h3>${data}`
 }
 
