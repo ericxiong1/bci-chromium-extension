@@ -25,3 +25,6 @@ BCI Web Browser Boilerplate (using the Web Bluetooth API) by Brainsatplay
 Special thanks:
 natHACKS 2022 Mentors and Organizers,
 Brainsatplay for providing the Boilerplate
+
+
+https://devpost.com/software/bci-brightness-extension
